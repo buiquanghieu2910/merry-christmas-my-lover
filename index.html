@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Giáng Sinh Cho Cậu 🎄💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(180deg, #0b0f24, #151a33, #0b0f24);
+            color: #fff;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        /* ❄️ Tuyết rơi */
+        .snow {
+            position: fixed;
+            top: -10px;
+            color: #fff;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: .8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ⭐ Ảnh ngoài */
+        .photo-box {
+            width: 85%;
+            max-width: 360px;
+            margin: 40px auto 20px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            animation: floatImg 4s ease-in-out infinite;
+        }
+
+        .photo-box img {
+            width: 100%;
+            border-radius: 14px;
+        }
+
+        @keyframes floatImg {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* ⭐ Lời chúc ngoài */
+        .subtitle {
+            font-size: 15px;
+            opacity: 0.85;
+            max-width: 350px;
+            margin: 10px auto 30px;
+            line-height: 1.6;
+        }
+
+        /* ⭐ Nút mở thiệp */
+        .open-btn {
+            padding: 14px 32px;
+            background: linear-gradient(45deg, #ff6b8c, #ff85a2);
+            border: none;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 12px 28px rgba(255, 118, 155, 0.45);
+            transition: .2s;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(255, 118, 155, 0.6);
+        }
+
+
+        /* ⭐ Nút nhạc */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            border: none;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+            transition: .2s;
+            z-index: 10;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .music-btn.on {
+            background: rgba(255, 120, 150, 0.45);
+            box-shadow: 0 0 18px rgba(255, 120, 150, 0.8);
+        }
+
+
+        /* ---------------------- */
+        /* POPUP THIỆP */
+        /* ---------------------- */
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ⭐ Thiệp */
+        .card {
+            width: 90%;
+            max-width: 420px;
+            background: #fff8f9;
+            color: #422;
+            padding: 22px 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.85);
+            opacity: 0;
+            transition: .35s;
+        }
+
+        .overlay.show .card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* ⭐ Nút đóng */
+        .close {
+            float: right;
+            font-size: 26px;
+            cursor: pointer;
+            color: #c2185b;
+            border: none;
+            background: none;
+        }
+
+        /* ⭐ Chữ chạy từng ký tự */
+        .typewriter {
+            margin-top: 10px;
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre-line;
+            min-height: 220px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nút bật/tắt nhạc -->
+    <button class="music-btn" id="musicBtn">🎵</button>
+    <audio id="bgMusic" loop src="audio.mp3"></audio>
+
+
+    <!-- ❄️ SNOW EFFECT -->
+    <script>
+        function snow() {
+            const s = document.createElement("div");
+            s.className = "snow";
+            s.textContent = "❄";
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.fontSize = 12 + Math.random() * 8 + "px";
+            s.style.animationDuration = 5 + Math.random() * 6 + "s";
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 10000);
+        }
+        setInterval(snow, 140);
+    </script>
+
+    <!-- 🎄 MÀN HÌNH CHÍNH -->
+
+    <h1>
+        <span style="margin-top:30px;font-size:28px;
+background:linear-gradient(45deg,#ffc6d9,#ffffff);
+-webkit-background-clip:text;color:transparent;">Merry Christmas</span> 🎄💖
+    </h1>
+
+    <div class="subtitle">
+        Chúc em một mùa Giáng Sinh thật ấm áp,
+        thật vui vẻ, thật hạnh phúc…
+        Và nếu được, cho anh làm người khiến em mỉm cười nhé. ✨
+    </div>
+
+    <!-- ẢNH -->
+    <div class="photo-box">
+        <img src="image.jpg">
+    </div>
+
+    <!-- Nút mở thiệp -->
+    <button class="open-btn" id="openCard">💌 Mở Thiệp</button>
+
+
+    <!-- 🎁 POPUP THIỆP -->
+
+    <div class="overlay" id="overlay">
+        <div class="card">
+            <button class="close" id="closeCard">&times;</button>
+
+            <h3 style="color:#c2185b;margin-bottom:10px;">Gửi em – điều ấm áp nhất mùa đông 🎄💗</h3>
+
+            <div class="typewriter" id="typewriter"></div>
+        </div>
+    </div>
+
+
+    <script>
+        /* 🎵 Bật/tắt nhạc */
+        const music = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicBtn");
+        let isPlaying = false;
+
+        musicBtn.onclick = () => {
+            if (!isPlaying) {
+                music.play();
+                isPlaying = true;
+                musicBtn.classList.add("on");
+                musicBtn.textContent = "🔊";
+            } else {
+                music.pause();
+                isPlaying = false;
+                musicBtn.classList.remove("on");
+                musicBtn.textContent = "🎵";
+            }
+        };
+
+
+        /* Text trong thiệp – chạy từng chữ */
+        const message =
+            `Này em,
+
+Giáng Sinh năm nay,
+anh muốn gửi em một điều giản dị…
+
+Anh mong em luôn hạnh phúc,
+luôn bình yên,
+và luôn mỉm cười thật tự nhiên như bây giờ.
+
+Em không biết đâu,
+chỉ cần em xuất hiện,
+mùa đông của anh đã ấm lên rồi đó. 💖
+
+Chúc em một Giáng Sinh thật đẹp,
+và nếu có thể…
+
+cho anh một cơ hội nhỏ
+được ở gần em hơn chút nữa. ✨
+`;
+
+        let i = 0;
+        function typeWriter() {
+            if (i < message.length) {
+                document.getElementById("typewriter").textContent += message.charAt(i);
+                i++;
+                setTimeout(typeWriter, 35);
+            }
+        }
+
+        /* Mở popup */
+        document.getElementById("openCard").onclick = () => {
+            const overlay = document.getElementById("overlay");
+            overlay.classList.add("show");
+
+            document.getElementById("typewriter").textContent = "";
+            i = 0;
+            setTimeout(typeWriter, 300);
+        };
+
+        /* Đóng popup */
+        document.getElementById("closeCard").onclick = () => {
+            document.getElementById("overlay").classList.remove("show");
+        };
+    </script>
+
+</body>
+
+</html>

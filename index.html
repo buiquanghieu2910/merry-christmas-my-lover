@@ -108,7 +108,6 @@
             box-shadow: 0 16px 32px rgba(255, 118, 155, 0.6);
         }
 
-
         /* ⭐ Nút nhạc */
         .music-btn {
             position: fixed;
@@ -136,7 +135,6 @@
             background: rgba(255, 120, 150, 0.45);
             box-shadow: 0 0 18px rgba(255, 120, 150, 0.8);
         }
-
 
         /* ---------------------- */
         /* POPUP THIỆP */
@@ -171,6 +169,10 @@
             transform: scale(0.85);
             opacity: 0;
             transition: .35s;
+            /* 👇 thêm để không tràn màn hình và cho phép scroll bên trong */
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .overlay.show .card {
@@ -188,13 +190,18 @@
             background: none;
         }
 
-        /* ⭐ Chữ chạy từng ký tự */
+        /* ⭐ Chữ chạy từng ký tự – SCROLL ĐƯỢC */
         .typewriter {
             margin-top: 10px;
             font-size: 15px;
             line-height: 1.6;
             white-space: pre-line;
-            min-height: 220px;
+            /* để phần text chiếm phần còn lại, cuộn được */
+            flex: 1;
+            overflow-y: auto;
+            max-height: 100%;
+            padding-right: 6px;
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
@@ -307,7 +314,7 @@ và đưa ra lời khuyên để giúp anh sửa đổi
 
 Đơn giản vì anh muốn được che chở 
 và đồng hành cùng em, 
-và yêu thương em trọn ven hơn từng ngày. ✨
+và yêu thương em trọn vẹn hơn từng ngày. ✨
 `;
 
         let i = 0;
